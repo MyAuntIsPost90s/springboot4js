@@ -1,0 +1,6 @@
+require('@babel/register')
+require('E:/Project/nodejs/springboot4js/src/starter/starter.js')
+require('E:/Project/nodejs/springboot4js/test/WebStart.js')
+require('E:/Project/nodejs/springboot4js/test/test.js')
+require('E:/Project/nodejs/springboot4js/test/TestController.js')
+require('E:/Project/nodejs/springboot4js/test/TestService.js')
