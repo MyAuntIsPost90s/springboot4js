@@ -1,9 +1,9 @@
 const applicationContext = require("../src/context/applicationContext");
 const bean = require("../src/core/decorator/bean");
-const componet = require("../src/core/decorator/componet");
+const component = require("../src/core/decorator/component");
 const resource = require("../src/core/decorator/resource");
 
-@componet()
+@component()
 class Main {
 
     @bean("test")
@@ -12,7 +12,7 @@ class Main {
     }
 }
 
-@componet()
+@component()
 class Main2 {
 
     @resource()
@@ -23,9 +23,13 @@ class Main2 {
 
     @resource("Main")
     test3;
+
+    fun() {
+        return 1;
+    }
 }
 
-@componet()
+@component()
 class Main3 extends Main2 {
 
 }

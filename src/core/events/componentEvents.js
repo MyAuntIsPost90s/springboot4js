@@ -1,4 +1,5 @@
 const beanPool = require("../pool/beanPool");
+const beanProxy = require("../proxy/beanProxy");
 
 const events = {};
 
@@ -10,14 +11,14 @@ const eventType = {
 
 const eventWorker = {}
 eventWorker[eventType.CALL] = (target, bean, event) => {
-    const result = { payload: bean.payload[event.data.funName](), injectionName: event.data.injectionName };
+    const result = beanProxy(event.data.injectionName, bean.payload[event.data.funName]());
     beanPool.put(event.data.injectionName, result);
-    componetEvents.trigger(event.data.injectionName, result);
+    componentEvents.trigger(event.data.injectionName, result);
 }
 eventWorker[eventType.INJECTION] = (target, bean, event) => {
     bean.payload[event.data.fieldName] = beanPool.get(event.data.injectionName) ? beanPool.get(event.data.injectionName).payload : undefined;
     if (!bean.payload[event.data.fieldName]) {
-        componetEvents.add(event.data.injectionName, eventType.DELAY_INJECTION, { ...event.data, bean });
+        componentEvents.add(event.data.injectionName, eventType.DELAY_INJECTION, { ...event.data, bean });
     }
 }
 eventWorker[eventType.DELAY_INJECTION] = (target, bean, event) => {
@@ -29,7 +30,7 @@ eventWorker[eventType.DELAY_INJECTION] = (target, bean, event) => {
  * 
  * @author cch
  */
-const componetEvents = {
+const componentEvents = {
 
     add: (target, type, data) => {
         if (!events[target]) {
@@ -42,7 +43,7 @@ const componetEvents = {
         let list = events[target] || [];
         list = list.concat(events[bean.injectionName] || []);
         for (const event of list) {
-            if (eventType.DELAY_INJECTION == event.tyep) {
+            if (eventType.DELAY_INJECTION == event.type) {
                 eventWorker[event.type](bean.injectionName, bean, event);
             } else {
                 eventWorker[event.type](target, bean, event);
@@ -53,4 +54,4 @@ const componetEvents = {
 
 }
 
-module.exports = { eventType, componetEvents }
+module.exports = { eventType, componentEvents }

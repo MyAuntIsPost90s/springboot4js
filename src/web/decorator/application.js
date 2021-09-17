@@ -1,13 +1,13 @@
 const express = require('express');
 const applicationContext = require('../../context/applicationContext');
-const componet = require('../../core/decorator/componet');
+const component = require('../../core/decorator/component');
 const webContext = require('../context/webContext');
 
 const application = (port) => (target) => {
     if (!port) {
         port = 8081;
     }
-    componet("application")(target);
+    component("application")(target);
     const application = applicationContext.getBean("application");
     application.routers = {};
     webContext.setApplication(application);

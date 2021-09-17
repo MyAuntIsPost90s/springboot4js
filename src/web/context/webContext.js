@@ -1,4 +1,3 @@
-
 let application = null;
 
 const webContext = {

@@ -1,6 +1,6 @@
 const application = require("../src/web/decorator/application");
 
-@application()
+@application(8082)
 class WebStart {
 
     started() {

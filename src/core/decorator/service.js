@@ -1,4 +1,4 @@
-const componet = require("./componet");
+const component = require("./component");
 
 /**
  * service 注解，用于类，将自动创建一个类的实例并加入管理
@@ -7,7 +7,7 @@ const componet = require("./componet");
  * @author cch
  */
 const service = (key) => (target) => {
-    return componet(key)(target);
+    return component(key)(target);
 }
 
 module.exports = service;
